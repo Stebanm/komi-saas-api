@@ -3,13 +3,15 @@ import { InventoryItemId } from "./value-object/inventory-item-id.value-object";
 import { InventoryItemName } from "./value-object/inventory-item-name.value-object";
 import { InventoryItemUnit } from "./value-object/inventory-item-unit.value-object";
 import { InventoryItemCreatedEvent } from "./inventory-item-created.event";
+import { InventoryItemResponse } from "./types/inventory-item.response";
 
 export class InventoryItem extends AggregateRoot<InventoryItemId> {
     private readonly name: InventoryItemName;
     private readonly unit: InventoryItemUnit;
-    private cost: Money;
     private readonly isPerishable: boolean;
+    private cost: Money;
     private active: boolean;
+    public readonly createdAt: Date;
 
 
     private constructor(
@@ -18,7 +20,7 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
         unit: InventoryItemUnit,
         cost: Money,
         isPerishable: boolean,
-        active: boolean
+        active: boolean,
     ) {
         super(id);
 
@@ -27,18 +29,18 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
         this.isPerishable = isPerishable;
         this.cost = cost;
         this.active = active;
+        this.createdAt = new Date();
     };
 
 
     public static create(params: {
-        id: InventoryItemId;
         name: InventoryItemName;
         unit: InventoryItemUnit;
         cost: Money;
         isPerishable: boolean;
     }): InventoryItem {
         const item = new InventoryItem(
-            params.id,
+            InventoryItemId.generate(),
             params.name,
             params.unit,
             params.cost,
@@ -58,6 +60,19 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
         );
 
         return item;
+    };
+
+
+    public toPrimitives(): InventoryItemResponse {
+        return {
+            id: this.id.value,
+            name: this.name.value,
+            unit: this.unit.value,
+            cost: this.cost.getAmount(),
+            isPerishable: this.isPerishable,
+            active: this.active,
+            createdAt: this.createdAt,
+        };
     };
 
 
