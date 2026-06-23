@@ -33,5 +33,5 @@ export class InventoryItemController {
     public update() { };
 
 
-    private requireTenant() { };
+    // private requireTenant() { };
 };
