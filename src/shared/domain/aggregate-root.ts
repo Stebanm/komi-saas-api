@@ -12,12 +12,22 @@ import { Entity } from "./entity";
  *
  * @typeParam TId - tipo del identificador, atado a Uuid.
  */
-export abstract class AggregateRoot<TId extends Uuid> extends Entity<TId> {
-    private readonly domainEvent: DomainEvent[] = [];
+export abstract class AggregateRoot<ID extends Uuid> extends Entity<ID> {
+    private readonly domainEvents: DomainEvent[] = [];
 
     protected registerEvent(event: DomainEvent): void {
         if (event != null) {
-            this.domainEvent.push(event);
+            this.domainEvents.push(event);
         };
+    };
+
+
+    public getDomainEvents(): ReadonlyArray<DomainEvent> {
+        return [...this.domainEvents];
+    };
+
+
+    public clearDomainEvents(): void {
+        this.domainEvents.length = 0;
     };
 };

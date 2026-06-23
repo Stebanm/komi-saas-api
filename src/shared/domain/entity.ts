@@ -16,5 +16,10 @@ export abstract class Entity<ID extends Uuid> {
     };
 
 
+    public equals(other?: unknown): boolean {
+        if (this === other) return true;
+        if (!(other instanceof Entity)) return true;
 
+        return this.id.equals(other.id);
+    };
 };

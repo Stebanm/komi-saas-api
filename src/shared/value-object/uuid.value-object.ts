@@ -1,17 +1,28 @@
-import { v7 as uuid } from 'uuid';
+import { validate as IsUUID } from 'uuid';
+import { DomainException } from '../exception/domain.exception';
 
 
-export const generateUUID = (): string => uuid();
+export class InvalidUuidException extends DomainException {
+    constructor(value: string) {
+        super(`El valor "${value}" no es un UUID válido.`);
+    };
+};
 
 
 export abstract class Uuid {
-    protected constructor(
-        public readonly value: string
-    ) { };
+    public readonly value: string;
+
+    protected constructor(value: string) {
+        if (!value || IsUUID(value)) {
+            throw new InvalidUuidException(value);
+        };
+
+        this.value = value;
+    };
 
 
-    public equals(value: Uuid): boolean {
-        return this.value === value.value;
+    public equals(other: Uuid): boolean {
+        return this.value === other.value && this.constructor === other.constructor;
     };
 
 
