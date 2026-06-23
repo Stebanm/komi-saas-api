@@ -1,4 +1,6 @@
-import { Money } from "src/shared";
+
+
+import { Money } from "@/shared";
 import { InventoryItem } from "../../domain/inventory-item.aggregate";
 import { InventoryItemRepository } from "../../domain/inventory-item.repository";
 import { InventoryItemName } from "../../domain/value-object/inventory-item-name.value-object";

@@ -1,4 +1,5 @@
 export * from './domain/aggregate-root';
+export * from './domain/domain-event'
 
 
 export * from './value-object/uuid-generator.value-object';

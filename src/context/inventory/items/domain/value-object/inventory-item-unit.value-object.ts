@@ -1,4 +1,5 @@
-import { DomainException } from "src/shared";
+import { DomainException } from "@/shared";
+
 
 /** Unidades de medida soportadas para el inventario. Ampliable según necesidad. */
 export enum MeasurementUnit {

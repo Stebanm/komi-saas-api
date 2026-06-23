@@ -1,4 +1,5 @@
-import { DomainEvent } from "src/shared/domain/domain-event";
+import { DomainEvent } from "@/shared";
+
 
 
 interface InventoryItemCreatedProps {

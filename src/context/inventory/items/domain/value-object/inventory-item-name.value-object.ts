@@ -1,4 +1,5 @@
-import { DomainException } from "src/shared/exception/domain.exception";
+import { DomainException } from "@/shared";
+
 
 export class InvalidInventoryNameException extends DomainException {
     constructor(reason: string) {

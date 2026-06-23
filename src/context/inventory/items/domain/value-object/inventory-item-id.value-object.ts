@@ -1,4 +1,5 @@
-import { generateUUID, Uuid } from "src/shared";
+import { generateUUID, Uuid } from "@/shared";
+
 
 export class InventoryItemId extends Uuid {
     private constructor(value: string) {

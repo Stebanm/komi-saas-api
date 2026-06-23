@@ -1,9 +1,10 @@
-import { AggregateRoot, Money } from "src/shared";
+
 import { InventoryItemId } from "./value-object/inventory-item-id.value-object";
 import { InventoryItemName } from "./value-object/inventory-item-name.value-object";
 import { InventoryItemUnit } from "./value-object/inventory-item-unit.value-object";
 import { InventoryItemCreatedEvent } from "./inventory-item-created.event";
 import { InventoryItemResponse } from "./types/inventory-item.response";
+import { AggregateRoot, Money } from "@/shared";
 
 export class InventoryItem extends AggregateRoot<InventoryItemId> {
     private readonly name: InventoryItemName;
