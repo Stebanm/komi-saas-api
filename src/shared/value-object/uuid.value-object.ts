@@ -13,7 +13,7 @@ export abstract class Uuid {
     public readonly value: string;
 
     protected constructor(value: string) {
-        if (!value || IsUUID(value)) {
+        if (!value || !IsUUID(value)) {
             throw new InvalidUuidException(value);
         };
 
