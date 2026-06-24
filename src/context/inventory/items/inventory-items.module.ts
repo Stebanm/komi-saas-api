@@ -5,6 +5,7 @@ import { InventoryItemController } from "./infrastructure/http/inventory-item.co
 import { InventoryItemRepository } from "./domain/inventory-item.repository";
 import { InventoryItemService } from "./infrastructure/persistence/inventory-item.services";
 import { CreateInventoryItemUseCase } from "./application/create-item/create-inventory-item.use-case";
+import { SearchInventoryItemUseCase } from "./application/search-items/search-inventory-item.use-case";
 
 @Module({
     imports: [TypeOrmModule.forFeature([InventoryItemEntity])],
@@ -17,6 +18,11 @@ import { CreateInventoryItemUseCase } from "./application/create-item/create-inv
         {
             provide: CreateInventoryItemUseCase,
             useFactory: (repository: InventoryItemRepository) => new CreateInventoryItemUseCase(repository),
+            inject: [InventoryItemRepository]
+        },
+        {
+            provide: SearchInventoryItemUseCase,
+            useFactory: (repository: InventoryItemRepository) => new SearchInventoryItemUseCase(repository),
             inject: [InventoryItemRepository]
         }
     ]

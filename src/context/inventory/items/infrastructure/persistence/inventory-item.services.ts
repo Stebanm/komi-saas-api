@@ -28,4 +28,20 @@ export class InventoryItemService implements InventoryItemRepository {
 
         await this.inventoryRepository.save(row);
     };
+
+
+    public async search(): Promise<InventoryItem[]> {
+        const rows = await this.inventoryRepository.find();
+
+        return rows.map((row) =>
+            InventoryItem.fromPrimitives({
+                id: row.id,
+                name: row.name,
+                unit: row.unit,
+                cost: { amount: row.costAmount, currency: row.costCurrency },
+                isPerishable: row.isPerishable,
+                isActive: row.isActive,
+            })
+        );
+    };
 };

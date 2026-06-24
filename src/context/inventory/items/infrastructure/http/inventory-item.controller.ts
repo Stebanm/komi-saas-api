@@ -1,11 +1,14 @@
 import { Body, Controller, Get, Post } from "@nestjs/common";
 import { CreateInventoryItemUseCase } from "../../application/create-item/create-inventory-item.use-case";
 import { CreateInventoryItemDto } from "./dto/create-inventory-item.dto";
+import { SearchInventoryItemUseCase } from "../../application/search-items/search-inventory-item.use-case";
+import { InventoryItemResponse } from "../../domain/types/inventory-item.response";
 
 @Controller('inventory/item')
 export class InventoryItemController {
     constructor(
-        private readonly createitem: CreateInventoryItemUseCase
+        private readonly createitem: CreateInventoryItemUseCase,
+        private readonly searchItems: SearchInventoryItemUseCase,
     ) { };
 
 
@@ -22,7 +25,10 @@ export class InventoryItemController {
     };
 
 
-    public search() { };
+    @Get()
+    public async search(): Promise<InventoryItemResponse[]> {
+        return this.searchItems.execute();
+    };
 
 
     @Get(':id')

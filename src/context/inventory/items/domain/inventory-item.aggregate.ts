@@ -74,6 +74,18 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
     };
 
 
+    public static fromPrimitives(primitives: InventoryItemResponse): InventoryItem {
+        return new InventoryItem(
+            InventoryItemId.create(primitives.id),
+            InventoryItemName.create(primitives.name),
+            InventoryItemUnit.create(primitives.unit),
+            Money.of(primitives.cost.amount, primitives.cost.currency),
+            primitives.isPerishable,
+            primitives.isActive,
+        );
+    };
+
+
     public desactivate(): void {
         if (!this.isActive) {
             throw new Error('El item se encuentra desactivado.');
