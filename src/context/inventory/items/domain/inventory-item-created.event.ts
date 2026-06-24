@@ -8,7 +8,7 @@ interface InventoryItemCreatedProps {
     unit: string;
     isPerishable: boolean;
     cost: { amount: string; currency: string };
-    active: boolean;
+    isActive: boolean;
 }
 
 
@@ -17,7 +17,7 @@ export class InventoryItemCreatedEvent extends DomainEvent {
     public readonly unit: string;
     public readonly isPerishable: boolean;
     public readonly cost: { amount: string; currency: string };
-    public readonly active: boolean;
+    public readonly isActive: boolean;
 
     constructor(props: InventoryItemCreatedProps) {
         super();
@@ -26,6 +26,6 @@ export class InventoryItemCreatedEvent extends DomainEvent {
         this.unit = props.unit;
         this.isPerishable = props.isPerishable;
         this.cost = props.cost;
-        this.active = props.active;
+        this.isActive = props.isActive;
     };
 };

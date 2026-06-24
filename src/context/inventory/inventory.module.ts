@@ -1,7 +1,8 @@
 import { Module } from "@nestjs/common";
+import { InventoryItemModule } from "./items/inventory-items.module";
 
 @Module({
-    imports: [],
+    imports: [InventoryItemModule],
 })
 
 export class InventoryModule { };

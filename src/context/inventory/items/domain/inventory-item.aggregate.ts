@@ -11,8 +11,7 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
     private readonly unit: InventoryItemUnit;
     private readonly isPerishable: boolean;
     private cost: Money;
-    private active: boolean;
-    public readonly createdAt: Date;
+    private isActive: boolean;
 
 
     private constructor(
@@ -21,7 +20,7 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
         unit: InventoryItemUnit,
         cost: Money,
         isPerishable: boolean,
-        active: boolean,
+        isActive: boolean,
     ) {
         super(id);
 
@@ -29,8 +28,7 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
         this.unit = unit;
         this.isPerishable = isPerishable;
         this.cost = cost;
-        this.active = active;
-        this.createdAt = new Date();
+        this.isActive = isActive;
     };
 
 
@@ -56,7 +54,7 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
                 unit: item.unit.value,
                 isPerishable: item.isPerishable,
                 cost: item.cost.toPrimitives(),
-                active: item.active,
+                isActive: item.isActive,
             })
         );
 
@@ -69,29 +67,28 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
             id: this.id.value,
             name: this.name.value,
             unit: this.unit.value,
-            cost: this.cost.getAmount(),
+            cost: this.cost.toPrimitives(),
             isPerishable: this.isPerishable,
-            active: this.active,
-            createdAt: this.createdAt,
+            isActive: this.isActive,
         };
     };
 
 
     public desactivate(): void {
-        if (!this.active) {
+        if (!this.isActive) {
             throw new Error('El item se encuentra desactivado.');
         };
 
-        this.active = false;
+        this.isActive = false;
     };
 
 
     public activate(): void {
-        if (this.active) {
+        if (this.isActive) {
             throw new Error('El item se encuentra activado.');
         };
 
-        this.active = true;
+        this.isActive = true;
     };
 
 };
