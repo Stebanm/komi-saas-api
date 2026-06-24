@@ -19,10 +19,10 @@ export class InventoryItemService implements InventoryItemRepository {
         const row = this.inventoryRepository.create({
             id: primitives.id,
             name: primitives.name,
-            unit: primitives.unit,
+            unitOfMeasure: primitives.unitOfMeasure,
             isPerishable: primitives.isPerishable,
-            costAmount: primitives.cost.amount,
-            costCurrency: primitives.cost.currency,
+            costAmount: primitives.costAmount,
+            costCurrency: primitives.costCurrency,
             isActive: primitives.isActive
         });
 
@@ -37,8 +37,9 @@ export class InventoryItemService implements InventoryItemRepository {
             InventoryItem.fromPrimitives({
                 id: row.id,
                 name: row.name,
-                unit: row.unit,
-                cost: { amount: row.costAmount, currency: row.costCurrency },
+                unitOfMeasure: row.unitOfMeasure,
+                costAmount: row.costAmount,
+                costCurrency: row.costCurrency,
                 isPerishable: row.isPerishable,
                 isActive: row.isActive,
             })

@@ -5,27 +5,30 @@ import { DomainEvent } from "@/shared";
 interface InventoryItemCreatedProps {
     itemId: string;
     name: string;
-    unit: string;
+    unitOfMeasure: string;
+    costAmount: string;
+    costCurrency: string;
     isPerishable: boolean;
-    cost: { amount: string; currency: string };
     isActive: boolean;
-}
+};
 
 
 export class InventoryItemCreatedEvent extends DomainEvent {
     public readonly name: string;
-    public readonly unit: string;
+    public readonly unitOfMeasure: string;
     public readonly isPerishable: boolean;
-    public readonly cost: { amount: string; currency: string };
+    public readonly costAmount: string;
+    public readonly costCurrency: string;
     public readonly isActive: boolean;
 
     constructor(props: InventoryItemCreatedProps) {
         super();
 
         this.name = props.name;
-        this.unit = props.unit;
+        this.unitOfMeasure = props.unitOfMeasure;
         this.isPerishable = props.isPerishable;
-        this.cost = props.cost;
+        this.costAmount = props.costAmount;
+        this.costCurrency = props.costCurrency;
         this.isActive = props.isActive;
     };
 };

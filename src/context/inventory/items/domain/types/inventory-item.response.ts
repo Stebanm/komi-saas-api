@@ -3,8 +3,9 @@ export interface InventoryItemResponse {
     id: string;
     // tenantId: string;
     name: string;
-    unit: string;
-    cost: { amount: string; currency: string };
+    unitOfMeasure: string;
+    costAmount: string;
+    costCurrency: string;
     isPerishable: boolean;
     isActive: boolean;
 };

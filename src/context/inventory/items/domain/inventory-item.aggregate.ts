@@ -8,41 +8,41 @@ import { AggregateRoot, Money } from "@/shared";
 
 export class InventoryItem extends AggregateRoot<InventoryItemId> {
     private readonly name: InventoryItemName;
-    private readonly unit: InventoryItemUnit;
+    private readonly unitOfMeasure: InventoryItemUnit;
     private readonly isPerishable: boolean;
-    private cost: Money;
+    private costAmount: Money;
     private isActive: boolean;
 
 
     private constructor(
         id: InventoryItemId,
         name: InventoryItemName,
-        unit: InventoryItemUnit,
-        cost: Money,
+        unitOfMeasure: InventoryItemUnit,
+        costAmount: Money,
         isPerishable: boolean,
         isActive: boolean,
     ) {
         super(id);
 
         this.name = name;
-        this.unit = unit;
+        this.unitOfMeasure = unitOfMeasure;
         this.isPerishable = isPerishable;
-        this.cost = cost;
+        this.costAmount = costAmount;
         this.isActive = isActive;
     };
 
 
     public static create(params: {
         name: InventoryItemName;
-        unit: InventoryItemUnit;
-        cost: Money;
+        unitOfMeasure: InventoryItemUnit;
+        costAmount: Money;
         isPerishable: boolean;
     }): InventoryItem {
         const item = new InventoryItem(
             InventoryItemId.generate(),
             params.name,
-            params.unit,
-            params.cost,
+            params.unitOfMeasure,
+            params.costAmount,
             params.isPerishable,
             true
         );
@@ -51,9 +51,10 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
             new InventoryItemCreatedEvent({
                 itemId: item.id.value,
                 name: item.name.value,
-                unit: item.unit.value,
+                unitOfMeasure: item.unitOfMeasure.value,
+                costAmount: item.costAmount.getAmount(),
+                costCurrency: item.costAmount.currency,
                 isPerishable: item.isPerishable,
-                cost: item.cost.toPrimitives(),
                 isActive: item.isActive,
             })
         );
@@ -66,8 +67,9 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
         return {
             id: this.id.value,
             name: this.name.value,
-            unit: this.unit.value,
-            cost: this.cost.toPrimitives(),
+            unitOfMeasure: this.unitOfMeasure.value,
+            costAmount: this.costAmount.getAmount(),
+            costCurrency: this.costAmount.currency,
             isPerishable: this.isPerishable,
             isActive: this.isActive,
         };
@@ -78,8 +80,8 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
         return new InventoryItem(
             InventoryItemId.create(primitives.id),
             InventoryItemName.create(primitives.name),
-            InventoryItemUnit.create(primitives.unit),
-            Money.of(primitives.cost.amount, primitives.cost.currency),
+            InventoryItemUnit.create(primitives.unitOfMeasure),
+            Money.of(primitives.costAmount, primitives.costCurrency),
             primitives.isPerishable,
             primitives.isActive,
         );

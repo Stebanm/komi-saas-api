@@ -7,11 +7,11 @@ export class CreateInventoryItemDto {
 
 
     @IsString()
-    unit!: string;
+    unitOfMeasure!: string;
 
 
     @IsString()
-    cost!: string;
+    costAmount!: string;
 
 
     @IsBoolean()

@@ -9,8 +9,8 @@ import { InventoryItemUnit } from "../../domain/value-object/inventory-item-unit
 
 export interface CreateInventoryItemInput {
     name: string;
-    unit: string;
-    cost: string;
+    unitOfMeasure: string;
+    costAmount: string;
     isPerishable: boolean;
 };
 
@@ -26,8 +26,8 @@ export class CreateInventoryItemUseCase {
 
         const item = InventoryItem.create({
             name,
-            unit: InventoryItemUnit.create(params.unit),
-            cost: Money.of(params.cost),
+            unitOfMeasure: InventoryItemUnit.create(params.unitOfMeasure),
+            costAmount: Money.of(params.costAmount),
             isPerishable: params.isPerishable
         });
 

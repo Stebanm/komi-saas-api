@@ -15,8 +15,8 @@ export class InventoryItemEntity {
     name!: string;
 
 
-    @Column({ name: 'inventory_item_unit', type: 'varchar', length: 20 })
-    unit!: string;
+    @Column({ name: 'inventory_item_unit_of_measure', type: 'varchar', length: 20 })
+    unitOfMeasure!: string;
 
 
     // Postgres 'numeric' se materializa como string en JS; el mapper lo convierte.

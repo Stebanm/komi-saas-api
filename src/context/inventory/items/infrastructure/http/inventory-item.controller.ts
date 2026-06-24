@@ -18,8 +18,8 @@ export class InventoryItemController {
     ) {
         await this.createitem.execute({
             name: dto.name,
-            unit: dto.unit,
-            cost: dto.cost,
+            unitOfMeasure: dto.unitOfMeasure,
+            costAmount: dto.costAmount,
             isPerishable: dto.isPerishable
         });
     };
