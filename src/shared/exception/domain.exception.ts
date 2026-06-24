@@ -6,9 +6,15 @@
  * puede traducirlas a respuestas HTTP sin acoplar el dominio a NestJS.
  */
 export abstract class DomainException extends Error {
-    protected constructor(message: string) {
-        super(message);
+    public readonly code: string;
+    public readonly detail: string;
+
+
+    protected constructor(params: { code: string, detail: string }) {
+        super(params.detail);
 
         this.name = this.constructor.name;
+        this.code = params.code;
+        this.detail = params.detail
     };
 };

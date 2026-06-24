@@ -15,6 +15,13 @@ async function bootstrap() {
     })
   );
 
+  // El filtro y el interceptor están acotados a inventory (vía @UseFilters/@UseInterceptors
+  // en su controller). Así, mientras el resto está en construcción, conservas los errores
+  // genéricos de Nest fuera de inventory. Para hacerlo global: descomenta las dos líneas de
+  // abajo, reimporta AllExceptionsFilter/ResponseInterceptor y quita los decoradores del controller.
+  // app.useGlobalFilters(new AllExceptionsFilter());
+  // app.useGlobalInterceptors(new ResponseInterceptor(app.get(Reflector)));
+
   const configService = app.get(ConfigService);
   const port = configService.get<number>('PORT') ?? 3000;
 

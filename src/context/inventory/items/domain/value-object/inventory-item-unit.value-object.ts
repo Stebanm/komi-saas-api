@@ -12,7 +12,11 @@ export enum MeasurementUnit {
 export class InvalidInventoryUnitException extends DomainException {
     constructor(value: string) {
         const allowed = Object.values(MeasurementUnit).join(', ');
-        super(`Unidad de medida "${value}" no soportada. Permitidas: ${allowed}.`);
+
+        super({
+            code: '1001',
+            detail: `Unidad de medida "${value}" no soportada. Permitidas: ${allowed}.`
+        });
     };
 };
 

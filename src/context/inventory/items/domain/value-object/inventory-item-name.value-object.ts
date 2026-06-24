@@ -3,7 +3,10 @@ import { DomainException } from "@/shared";
 
 export class InvalidInventoryNameException extends DomainException {
     constructor(reason: string) {
-        super(`Nombre de item inválido: ${reason}.`);
+        super({
+            code: '1002',
+            detail: `Nombre de item inválido: ${reason}.`
+        });
     };
 };
 

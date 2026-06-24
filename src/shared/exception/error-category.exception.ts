@@ -1,0 +1,6 @@
+export enum ErrorCategory {
+    VALIDATION = 'VALIDATION',
+    NOT_FOUND = 'NOT_FOUND',
+    CONFLICT = 'CONFLICT',
+    UNAVAILABLE = 'UNAVAILABLE',
+};
