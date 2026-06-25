@@ -8,8 +8,6 @@ export class SearchInventoryItemUseCase {
 
 
     public async execute(): Promise<InventoryItemResponse[]> {
-        const items = await this.repository.search();
-
-        return items.map(item => item.toPrimitives());
+        return this.repository.search();
     };
 };

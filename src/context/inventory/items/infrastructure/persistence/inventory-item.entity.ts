@@ -11,6 +11,10 @@ export class InventoryItemEntity {
     tenantId!: string; */
 
 
+    @Column({ name: 'inventory_item_sku_number', type: 'bigint', unique: true })
+    skuNumber!: string;
+
+
     @Column({ name: 'inventory_item_name', type: 'varchar', length: 120 })
     name!: string;
 
