@@ -23,6 +23,8 @@ export const RESPONSE_CATALOG: Record<string, CatalogEntry> = {
     '1002': { status: ResponseStatus.Error, category: ErrorCategory.VALIDATION, message: 'El costo ingresado no es válido.' },
     '1003': { status: ResponseStatus.Error, category: ErrorCategory.VALIDATION, message: 'El nombre del item no es válido.' },
 
+    '1200': { status: ResponseStatus.Error, category: ErrorCategory.CONFLICT, message: 'El nombre del item ya se encuentra registrado.' },
+
     // 2xxx — recurso
     '2000': { status: ResponseStatus.Error, category: ErrorCategory.NOT_FOUND, message: 'El recurso solicitado no existe.' },
     '2001': { status: ResponseStatus.Warn, category: ErrorCategory.CONFLICT, message: 'El item ya se encuentra registrado.' },

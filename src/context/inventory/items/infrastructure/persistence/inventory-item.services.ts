@@ -6,6 +6,7 @@ import { Repository } from "typeorm";
 import { InventoryItem } from "../../domain/inventory-item.aggregate";
 import { InventoryItemSku } from "../../domain/value-object/inventory-item-sku.value-object";
 import { InventoryItemResponse } from "../../domain/types/inventory-item.response";
+import { InventoryItemName } from "../../domain/value-object/inventory-item-name.value-object";
 
 // TypeORM nombra la secuencia de una columna @Generated('increment') como
 // '<tabla>_<columna>_seq'. Si cambias el nombre de la tabla o de la columna, ajústalo aquí.
@@ -71,4 +72,14 @@ export class InventoryItemService implements InventoryItemRepository, OnModuleIn
             updatedAt: row.updatedAt
         }));
     };
+
+
+    public async existsByName(name: InventoryItemName): Promise<boolean> {
+        const count = await this.inventoryRepository
+            .createQueryBuilder('item')
+            .where('item.name ILIKE :name', { name: name.value })
+            .getCount();
+
+        return count > 0;
+    }
 };
