@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, OnModuleInit } from "@nestjs/common";
 import { InventoryItemRepository } from "../../domain/inventory-item.repository";
 import { InjectRepository } from "@nestjs/typeorm";
 import { InventoryItemEntity } from "./inventory-item.entity";
@@ -7,33 +7,42 @@ import { InventoryItem } from "../../domain/inventory-item.aggregate";
 import { InventoryItemSku } from "../../domain/value-object/inventory-item-sku.value-object";
 import { InventoryItemResponse } from "../../domain/types/inventory-item.response";
 
+// TypeORM nombra la secuencia de una columna @Generated('increment') como
+// '<tabla>_<columna>_seq'. Si cambias el nombre de la tabla o de la columna, ajústalo aquí.
+const SKU_SEQUENCE_NAME = 'inventory_items_inventory_item_sku_number_seq';
 const SKU_SEQUENCE_START = 1000;
 
 @Injectable()
-export class InventoryItemService implements InventoryItemRepository {
+export class InventoryItemService implements InventoryItemRepository, OnModuleInit {
     constructor(
         @InjectRepository(InventoryItemEntity)
         private readonly inventoryRepository: Repository<InventoryItemEntity>,
     ) { };
 
 
-    public async nextSkuNumber(): Promise<number> {
-        const result = await this.inventoryRepository
-            .createQueryBuilder('item')
-            .select('MAX(item.skuNumber)', 'max')
-            .getRawOne<{ max: string | null }>();
+    /**
+     * Cuando la tabla está vacía, arranca la secuencia del SKU en 1000.
+     * setval(..., 1000, false) hace que el PRÓXIMO nextval entregue 1000.
+     * El número lo asigna Postgres de forma atómica en cada INSERT.
+     */
+    public async onModuleInit(): Promise<void> {
+        const [row] = await this.inventoryRepository.query<{ count: string }[]>(
+            'SELECT COUNT(*) AS count FROM inventory_items',
+        );
 
-        return result?.max ? parseInt(result.max) + 1 : SKU_SEQUENCE_START;
+        if (row && Number(row.count) === 0) {
+            await this.inventoryRepository.query(
+                `SELECT setval('${SKU_SEQUENCE_NAME}', ${SKU_SEQUENCE_START}, false)`,
+            );
+        };
     };
 
 
     public async save(item: InventoryItem): Promise<void> {
         const primitives = item.toPrimitives();
-        const skuNumber = parseInt(primitives.sku.replace('INV-', ''));
 
         const row = this.inventoryRepository.create({
             id: primitives.id,
-            skuNumber: String(skuNumber),
             name: primitives.name,
             unitOfMeasure: primitives.unitOfMeasure,
             isPerishable: primitives.isPerishable,

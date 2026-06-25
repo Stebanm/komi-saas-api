@@ -1,14 +1,13 @@
 
+
 import { InventoryItemId } from "./value-object/inventory-item-id.value-object";
 import { InventoryItemName } from "./value-object/inventory-item-name.value-object";
 import { InventoryItemUnit } from "./value-object/inventory-item-unit.value-object";
-import { InventoryItemSku } from "./value-object/inventory-item-sku.value-object";
 import { InventoryItemCreatedEvent } from "./inventory-item-created.event";
 import { AggregateRoot, Money } from "@/shared";
 import { InventoryItemPrimitives } from "./types/inventory-item-primitives";
 
 export class InventoryItem extends AggregateRoot<InventoryItemId> {
-    private readonly sku: InventoryItemSku;
     private readonly name: InventoryItemName;
     private readonly unitOfMeasure: InventoryItemUnit;
     private readonly isPerishable: boolean;
@@ -18,7 +17,6 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
 
     private constructor(
         id: InventoryItemId,
-        sku: InventoryItemSku,
         name: InventoryItemName,
         unitOfMeasure: InventoryItemUnit,
         costAmount: Money,
@@ -27,7 +25,6 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
     ) {
         super(id);
 
-        this.sku = sku;
         this.name = name;
         this.unitOfMeasure = unitOfMeasure;
         this.isPerishable = isPerishable;
@@ -37,7 +34,6 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
 
 
     public static create(params: {
-        sku: InventoryItemSku;
         name: InventoryItemName;
         unitOfMeasure: InventoryItemUnit;
         costAmount: Money;
@@ -45,7 +41,6 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
     }): InventoryItem {
         const item = new InventoryItem(
             InventoryItemId.generate(),
-            params.sku,
             params.name,
             params.unitOfMeasure,
             params.costAmount,
@@ -72,7 +67,6 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
     public toPrimitives(): InventoryItemPrimitives {
         return {
             id: this.id.value,
-            sku: this.sku.value,
             name: this.name.value,
             unitOfMeasure: this.unitOfMeasure.value,
             costAmount: this.costAmount.getAmount(),
@@ -86,7 +80,6 @@ export class InventoryItem extends AggregateRoot<InventoryItemId> {
     public static fromPrimitives(primitives: InventoryItemPrimitives): InventoryItem {
         return new InventoryItem(
             InventoryItemId.create(primitives.id),
-            InventoryItemSku.fromValue(primitives.sku),
             InventoryItemName.create(primitives.name),
             InventoryItemUnit.create(primitives.unitOfMeasure),
             Money.of(primitives.costAmount, primitives.costCurrency),
