@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Generated, PrimaryColumn, UpdateDateColumn } from "typeorm";
 
 @Entity({ name: 'inventory_items' })
 export class InventoryItemEntity {
@@ -12,6 +12,7 @@ export class InventoryItemEntity {
 
 
     @Column({ name: 'inventory_item_sku_number', type: 'bigint', unique: true })
+    @Generated('increment')
     skuNumber!: string;
 
 
