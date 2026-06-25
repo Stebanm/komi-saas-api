@@ -11,6 +11,17 @@ export class InvalidInventoryNameException extends DomainException {
 };
 
 
+
+export class InventoryItemNameAlreadyExistsException extends DomainException {
+    constructor(name: string) {
+        super({
+            code: '1200',
+            detail: `El nombre "${name}" ya está registrado en el inventario.`,
+        });
+    };
+};
+
+
 export class InventoryItemName {
     private static readonly MIN_LENGTH = 2;
     private static readonly MAX_LENGTH = 120;
