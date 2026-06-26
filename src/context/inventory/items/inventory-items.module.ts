@@ -23,7 +23,8 @@ import { InventoryItemController, InventoryItemEntity, InventoryItemService } fr
             useFactory: (repository: InventoryItemRepository) => new SearchInventoryItemUseCase(repository),
             inject: [InventoryItemRepository]
         }
-    ]
+    ],
+    exports: [InventoryItemRepository]
 })
 
 export class InventoryItemModule { };

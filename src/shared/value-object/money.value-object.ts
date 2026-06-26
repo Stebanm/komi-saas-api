@@ -89,6 +89,17 @@ export class Money {
     };
 
 
+    public divide(divisor: number | string): Money {
+        const newDivisor = new Decimal(divisor);
+
+        if (newDivisor.isNegative() || newDivisor.isZero()) {
+            throw new InvalidMoneyError('El divisor debe ser mayor a cero.');
+        };
+
+        return new Money(this.amount.dividedBy(newDivisor), this.currency);
+    };
+
+
     // ---- Comparación ----
 
     public equals(other: Money): boolean {

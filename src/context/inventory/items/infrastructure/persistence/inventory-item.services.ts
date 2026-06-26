@@ -85,6 +85,7 @@ export class InventoryItemService implements InventoryItemRepository, OnModuleIn
 
     public async findById(id: InventoryItemId): Promise<InventoryItem | null> {
         const row = await this.inventoryRepository.findOne({ where: { id: id.value } });
+        console.log('row: ', row);
 
         if (row === null) {
             return null;
