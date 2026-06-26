@@ -1,11 +1,10 @@
 import { Body, Controller, Get, Post, UseFilters, UseInterceptors } from "@nestjs/common";
-import { CreateInventoryItemUseCase } from "../../application/create-item/create-inventory-item.use-case";
-import { CreateInventoryItemDto } from "./dto/create-inventory-item.dto";
-import { SearchInventoryItemUseCase } from "../../application/search-items/search-inventory-item.use-case";
-import { InventoryItemResponse } from "../../domain/types/inventory-item.response";
-import { ResponseMessage } from "@/shared/infrastructure/http/response-message.decorator";
-import { ResponseInterceptor } from "@/shared/infrastructure/http/response.interceptor";
-import { AllExceptionsFilter } from "@/shared/infrastructure/http/all-exceptions.filter";
+
+import { AllExceptionsFilter, ResponseInterceptor, ResponseMessage } from "@/shared";
+
+import { InventoryItemResponse } from "../../domain";
+import { CreateInventoryItemUseCase, SearchInventoryItemUseCase } from "../../application";
+import { CreateInventoryItemDto } from "./dto";
 
 @UseInterceptors(ResponseInterceptor)
 @UseFilters(AllExceptionsFilter)

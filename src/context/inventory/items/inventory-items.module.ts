@@ -1,11 +1,9 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { InventoryItemEntity } from "./infrastructure/persistence/inventory-item.entity";
-import { InventoryItemController } from "./infrastructure/http/inventory-item.controller";
-import { InventoryItemRepository } from "./domain/inventory-item.repository";
-import { InventoryItemService } from "./infrastructure/persistence/inventory-item.services";
-import { CreateInventoryItemUseCase } from "./application/create-item/create-inventory-item.use-case";
-import { SearchInventoryItemUseCase } from "./application/search-items/search-inventory-item.use-case";
+
+import { InventoryItemRepository } from "./domain";
+import { CreateInventoryItemUseCase, SearchInventoryItemUseCase } from "./application";
+import { InventoryItemController, InventoryItemEntity, InventoryItemService } from "./infrastructure";
 
 @Module({
     imports: [TypeOrmModule.forFeature([InventoryItemEntity])],

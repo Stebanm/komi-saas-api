@@ -1,12 +1,11 @@
 import { Injectable, OnModuleInit } from "@nestjs/common";
-import { InventoryItemRepository } from "../../domain/inventory-item.repository";
 import { InjectRepository } from "@nestjs/typeorm";
-import { InventoryItemEntity } from "./inventory-item.entity";
+
 import { Repository } from "typeorm";
-import { InventoryItem } from "../../domain/inventory-item.aggregate";
-import { InventoryItemSku } from "../../domain/value-object/inventory-item-sku.value-object";
-import { InventoryItemResponse } from "../../domain/types/inventory-item.response";
-import { InventoryItemName } from "../../domain/value-object/inventory-item-name.value-object";
+
+import { InventoryItem, InventoryItemName, InventoryItemRepository, InventoryItemResponse, InventoryItemSku } from "../../domain";
+import { InventoryItemEntity } from "./inventory-item.entity";
+
 
 // TypeORM nombra la secuencia de una columna @Generated('increment') como
 // '<tabla>_<columna>_seq'. Si cambias el nombre de la tabla o de la columna, ajústalo aquí.

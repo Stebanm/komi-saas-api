@@ -1,16 +1,5 @@
 import { DomainEvent } from "@/shared";
-
-
-
-interface InventoryItemCreatedProps {
-    itemId: string;
-    name: string;
-    unitOfMeasure: string;
-    costAmount: string;
-    costCurrency: string;
-    isPerishable: boolean;
-    isActive: boolean;
-};
+import { InventoryItemCreatedProps } from "./types/inventory-item-events";
 
 
 export class InventoryItemCreatedEvent extends DomainEvent {
