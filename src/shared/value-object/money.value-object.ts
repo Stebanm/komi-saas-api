@@ -78,12 +78,14 @@ export class Money {
     };
 
 
-    public multiply(factor: number): Money {
-        if (factor < 0) {
+    public multiply(factor: number | string): Money {
+        const newFactor = new Decimal(factor);
+
+        if (newFactor.isNegative()) {
             throw new InvalidMoneyError('El multiplicador no puede ser negativo.');
         };
 
-        return new Money(this.amount.times(factor), this.currency);
+        return new Money(this.amount.times(newFactor), this.currency);
     };
 
 
