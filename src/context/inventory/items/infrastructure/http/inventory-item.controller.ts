@@ -2,8 +2,7 @@ import { Body, Controller, Get, Post, UseFilters, UseInterceptors } from "@nestj
 
 import { AllExceptionsFilter, ResponseInterceptor, ResponseMessage } from "@/shared";
 
-import { InventoryItemResponse } from "../../domain";
-import { CreateInventoryItemUseCase, SearchInventoryItemUseCase } from "../../application";
+import { CreateInventoryItemUseCase } from "../../application";
 import { CreateInventoryItemDto } from "./dto";
 
 @UseInterceptors(ResponseInterceptor)
@@ -12,7 +11,6 @@ import { CreateInventoryItemDto } from "./dto";
 export class InventoryItemController {
     constructor(
         private readonly createitem: CreateInventoryItemUseCase,
-        private readonly searchItems: SearchInventoryItemUseCase,
     ) { };
 
 
@@ -27,12 +25,6 @@ export class InventoryItemController {
             costAmount: dto.costAmount,
             isPerishable: dto.isPerishable
         });
-    };
-
-
-    @Get()
-    public async search(): Promise<InventoryItemResponse[]> {
-        return this.searchItems.execute();
     };
 
 

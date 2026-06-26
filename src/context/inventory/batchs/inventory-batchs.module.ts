@@ -33,7 +33,8 @@ import { InventoryBatchController, InventoryBatchEntity, InventoryBatchService }
             useFactory: (repository: InventoryBatchRepository) => new SearchInventoryBatchUseCase(repository),
             inject: [InventoryBatchRepository]
         }
-    ]
+    ],
+    exports: [InventoryBatchRepository]
 })
 
 export class InventoryBatchModule { };
