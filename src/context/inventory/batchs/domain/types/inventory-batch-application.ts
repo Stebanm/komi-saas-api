@@ -1,7 +1,7 @@
 export interface CreateInventoryBatchApplicationParams {
     inventoryItemId: string;
     quantityReceived: string;
-    unitCostAmount: string;
+    totalCostAmount: string;
     expirationDate: string | null;
     receivedAt?: string;
 };

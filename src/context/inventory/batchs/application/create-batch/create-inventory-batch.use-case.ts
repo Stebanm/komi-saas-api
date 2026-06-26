@@ -21,6 +21,10 @@ export class CreateInventoryBatchUseCase {
 
         const itemData = item.toPrimitives();
 
+        const quantityReceived = Quantity.of(params.quantityReceived);
+        const totalCost = Money.of(params.totalCostAmount, itemData.costCurrency);
+        const unitCost = totalCost.divide(quantityReceived.getValue());
+
         // El item manda: si es perecedero exige vencimiento; si no, se ignora.
         if (itemData.isPerishable && params.expirationDate === null) {
             throw new Error('Un item perecedero requiere fecha de vencimiento en el lote.');
@@ -33,9 +37,8 @@ export class CreateInventoryBatchUseCase {
 
         const batch = InventoryBatch.create({
             inventoryItemId: itemId,
-            quantityReceived: Quantity.of(params.quantityReceived),
-            // La moneda del costo del lote sigue a la del item (fuente de verdad).
-            unitCost: Money.of(params.unitCostAmount, itemData.costCurrency),
+            quantityReceived,
+            unitCost,
             expirationDate,
             receivedAt: params.receivedAt ? new Date(params.receivedAt) : new Date(),
         });
