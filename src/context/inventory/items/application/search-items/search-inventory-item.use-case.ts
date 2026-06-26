@@ -1,5 +1,5 @@
-import { InventoryItemRepository } from "../../domain/inventory-item.repository";
-import { InventoryItemResponse } from "../../domain/types/inventory-item.response";
+import { InventoryItemRepository, InventoryItemResponse } from "../../domain";
+
 
 export class SearchInventoryItemUseCase {
     constructor(
