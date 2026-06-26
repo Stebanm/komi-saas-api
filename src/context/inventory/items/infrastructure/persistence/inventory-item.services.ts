@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 
 import { Repository } from "typeorm";
 
-import { InventoryItem, InventoryItemName, InventoryItemRepository, InventoryItemResponse, InventoryItemSku } from "../../domain";
+import { InventoryItem, InventoryItemId, InventoryItemName, InventoryItemRepository, InventoryItemResponse, InventoryItemSku } from "../../domain";
 import { InventoryItemEntity } from "./inventory-item.entity";
 
 
@@ -80,5 +80,24 @@ export class InventoryItemService implements InventoryItemRepository, OnModuleIn
             .getCount();
 
         return count > 0;
-    }
+    };
+
+
+    public async findById(id: InventoryItemId): Promise<InventoryItem | null> {
+        const row = await this.inventoryRepository.findOne({ where: { id: id.value } });
+
+        if (row === null) {
+            return null;
+        };
+
+        return InventoryItem.fromPrimitives({
+            id: row.id,
+            name: row.name,
+            unitOfMeasure: row.unitOfMeasure,
+            costAmount: row.costAmount,
+            costCurrency: row.costCurrency,
+            isPerishable: row.isPerishable,
+            isActive: row.isActive,
+        });
+    };
 };
