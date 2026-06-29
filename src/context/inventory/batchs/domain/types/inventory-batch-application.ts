@@ -11,5 +11,7 @@ export interface CreateInventoryBatchApplicationParams {
 export interface BatchCostSummary {
     /** Promedio ponderado del costo de los lotes ACTIVOS, o null si no hay. */
     weightedAverageUnitCost: string | null;
+    /** Derivado de quantityRemaining de los lotes ACTIVOS. */
+    totalRemainingQuantity: string;
     activeBatchCount: number;
-}
+};

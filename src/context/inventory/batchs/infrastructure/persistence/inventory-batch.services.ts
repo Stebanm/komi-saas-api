@@ -89,13 +89,18 @@ export class InventoryBatchService implements InventoryBatchRepository {
         };
 
         if (totalQuantity.isZero()) {
-            return { weightedAverageUnitCost: null, activeBatchCount: 0 };
+            return { 
+                weightedAverageUnitCost: null, 
+                totalRemainingQuantity: "0",
+                activeBatchCount: 0 
+            };
         };
 
         const weighted = totalValue.divide(totalQuantity.getValue());
 
         return {
             weightedAverageUnitCost: weighted.getAmount(),
+            totalRemainingQuantity: totalQuantity.getValue(),
             activeBatchCount,
         };
     };

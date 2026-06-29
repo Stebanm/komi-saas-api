@@ -6,11 +6,13 @@ import { InventoryBatchModule } from "../batchs/inventory-batchs.module";
 import { InventoryItemRepository } from "../items/domain";
 import { InventoryBatchRepository } from "../batchs/domain";
 import { InventoryItemReadController } from "./http/inventory-item.controller";
+import { InventoryStockController } from "./http/inventory-stock.controller";
+import { SearchStockUseCase } from "./search-stock.use-case";
 
 
 @Module({
     imports: [InventoryItemModule, InventoryBatchModule],
-    controllers: [InventoryItemReadController],
+    controllers: [InventoryItemReadController, InventoryStockController],
     providers: [
         {
             provide: SearchItemsWithCostUseCase,
@@ -18,6 +20,14 @@ import { InventoryItemReadController } from "./http/inventory-item.controller";
                 itemRepository: InventoryItemRepository,
                 batchRepository: InventoryBatchRepository,
             ) => new SearchItemsWithCostUseCase(itemRepository, batchRepository),
+            inject: [InventoryItemRepository, InventoryBatchRepository]
+        },
+        {
+            provide: SearchStockUseCase,
+            useFactory: (
+                itemRepository: InventoryItemRepository,
+                batchRepository: InventoryBatchRepository,
+            ) => new SearchStockUseCase(itemRepository, batchRepository),
             inject: [InventoryItemRepository, InventoryBatchRepository]
         }
     ]
